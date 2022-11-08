@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 public class AutoComplete {
 	
@@ -61,17 +65,26 @@ public class AutoComplete {
 	}    
 	public static void main(String[] args) {   
 		java.util.Scanner input = new java.util.Scanner(System.in);       
-		Trie t = new Trie();            
-        t.insert("amazon"); 
-        t.insert("amazon prime"); 
-		t.insert("amazing"); 			 
-        t.insert("amazing spider man"); 
-        t.insert("amazed");
-        t.insert("apple"); 
-		t.insert("car");
-		t.insert("electric car");
-		t.insert("caramel");
-		t.insert("care");
+		Trie t = new Trie(); 
+		String word;
+		try {
+			File file = new File("Data.txt");
+			if(file.createNewFile()){
+				System.out.println("File " + file.getName() + " is created successfully");
+			}
+			else {
+				BufferedReader br = new BufferedReader(new FileReader(file));
+				while((word = br.readLine()) != null){
+					t.insert(word);
+				}
+			}
+
+		}
+		catch(IOException exception){
+			System.out.println("An unexpected error occured");
+			exception.printStackTrace();
+		}
+		
         System.out.println("Enter a word to predict");
 		System.out.println(t.autocomplete(input.nextLine()));			
 	}

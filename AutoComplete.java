@@ -3,12 +3,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+
 public class AutoComplete {
 	
 	static class TrieNode {		
 	    char data;     
 	    LinkedList<TrieNode> children = new LinkedList<>();
-	    boolean isEnd = false; 
+	    boolean isEnd = false; // Checks if the word entered is a valid word
  
 	    //Constructor, Time O(1), Space O(1)
 	    TrieNode(char c) {
@@ -20,7 +21,7 @@ public class AutoComplete {
 	    TrieNode getChild(char c) {
 	    	if (children != null)
 	    		for (TrieNode child : children)
-	    			if (child.data == c)
+	    			if (child.data == c) // is entered character same as the node
 	    				return child;
 	        return null;
 	    }	    
@@ -38,7 +39,7 @@ public class AutoComplete {
 	            	node.children.add(new TrieNode(ch));
 	            node = node.getChild(ch);	            		           
 	        }
-	        node.isEnd = true;
+	        node.isEnd = true; // sets the value to true if entered character/ word is a valid word/character
 	    }
 	       	    
 	    //find the node with prefix's last char, then call helper to find all words using recursion
@@ -57,7 +58,7 @@ public class AutoComplete {
 		
 		//recursion helper, Time O(n), Space O(n), n is number of nodes in branches
 	    void helper(TrieNode node, List<String> res, String prefix) {		
-			if (node.isEnd)  
+			if (node.isEnd)  // and 
 				res.add(prefix + node.data);		
 			for (TrieNode child : node.children) 				
 				helper(child, res, prefix + node.data);						
